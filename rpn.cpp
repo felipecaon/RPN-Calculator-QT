@@ -49,7 +49,8 @@ void RPN::on_clear_released()
 void RPN::on_enter_released()
 {
 
-    ui->textEdit->setText(valorString);
+    ui->textEdit->append(valorString);
+
     ui->lineEdit->setText("0");
 
 }
