@@ -15,12 +15,14 @@ public:
     ~ListDuplamenteEncadeada();
     int valorAtual();
     void adicionar(int valor);
-    void remover();
+    void removerAtual();
     void comeco() { atual = cabeca; }
     void final() { atual = rabo; }
     bool proximo();
     bool anterior();
-    bool estaVazio() { return cabeca != nullptr; }
+    bool estaVazio() {
+        return cabeca == nullptr;
+    }
 
 
 };

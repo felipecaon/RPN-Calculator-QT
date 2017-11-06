@@ -9,9 +9,13 @@ protected:
     No* prev;
     int numero;
 public:                
-    Node(No* next, No* prev, int numero);
+    No(No* next, No* prev, int numero);
     int getNumero() const;
     void setNumero(int value);
+    No *getProx() const;
+    void setProx(No *value);
+    No *getPrev() const;
+    void setPrev(No *value);
 };
 
 #endif // NO_H

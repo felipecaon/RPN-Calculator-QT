@@ -21,6 +21,13 @@ RPN::RPN(QWidget *parent) :
     connect(ui->pushButton_9, SIGNAL(released()),this,SLOT(botaoPressionado()));
 
 
+
+    connect(ui->soma, SIGNAL(released()),this,SLOT(onSomar()));
+    connect(ui->divisao, SIGNAL(released()),this,SLOT(onDivisao()));
+    connect(ui->multiplicacao, SIGNAL(released()),this,SLOT(onMutiplicacao()));
+    connect(ui->subtracao, SIGNAL(released()),this,SLOT(onSubtracao()));
+
+
 }
 
 RPN::~RPN()
@@ -31,14 +38,9 @@ RPN::~RPN()
 void RPN::botaoPressionado()
 {
     QPushButton * botao = (QPushButton*)sender();
-    //QString valorString;
-    double valor;
-
-    valor = (ui->lineEdit->text() + botao->text()).toDouble();
-
-    valorString = QString::number(valor,'g',15);
-
-    ui->lineEdit->setText(valorString);
+    double numDoBtn = (ui->lineEdit->text() + botao->text()).toDouble();
+    pilhaDeValores = QString::number(numDoBtn,'g',15);
+    ui->lineEdit->setText(pilhaDeValores);
 }
 
 void RPN::on_clear_released()
@@ -49,8 +51,63 @@ void RPN::on_clear_released()
 void RPN::on_enter_released()
 {
 
-    ui->textEdit->append(valorString);
-
+    ui->textEdit->setText(pilhaDeValores);
     ui->lineEdit->setText("0");
+    pilha->adicionar(pilhaDeValores.toInt());
 
+}
+
+void RPN::onSomar()
+{
+
+    if(pilha->getTamanho() > 1){
+
+        int operando_1 = pilha->pegarValorAtual();
+        int operando_2 = pilha->pegarValorAtual();
+        int resultado = operando_1 + operando_2;
+        pilha->adicionar(resultado);
+        ui->textEdit->setText(QString::number(resultado,'g',15));
+
+
+    }
+
+}
+
+void RPN::onDivisao()
+{
+    if(pilha->getTamanho() > 1){
+
+        int operando_1 = pilha->pegarValorAtual();
+        int operando_2 = pilha->pegarValorAtual();
+        int resultado = operando_1 / operando_2;
+        pilha->adicionar(resultado);
+        ui->textEdit->setText(QString::number(resultado,'g',15));
+
+    }
+}
+
+void RPN::onMutiplicacao()
+{
+    if(pilha->getTamanho() > 1){
+
+        int operando_1 = pilha->pegarValorAtual();
+        int operando_2 = pilha->pegarValorAtual();
+        int resultado = operando_1 * operando_2;
+        pilha->adicionar(resultado);
+        ui->textEdit->setText(QString::number(resultado,'g',15));
+
+    }
+}
+
+void RPN::onSubtracao()
+{
+    if(pilha->getTamanho() > 1){
+
+        int operando_1 = pilha->pegarValorAtual();
+        int operando_2 = pilha->pegarValorAtual();
+        int resultado = operando_1 - operando_2;
+        pilha->adicionar(resultado);
+        ui->textEdit->setText(QString::number(resultado,'g',15));
+
+    }
 }

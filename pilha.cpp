@@ -5,6 +5,11 @@ ListDuplamenteEncadeada *Pilha::getLista() const
     return lista;
 }
 
+int Pilha::getTamanho() const
+{
+    return tamanho;
+}
+
 Pilha::Pilha()
 {
 
@@ -18,6 +23,7 @@ Pilha::~Pilha()
 void Pilha::adicionar(int valor)
 {
     lista->adicionar(valor);
+    tamanho++;
 }
 
 int Pilha::pegarValorAtual()
@@ -25,7 +31,8 @@ int Pilha::pegarValorAtual()
     int valor = lista->valorAtual();
 
     if(!lista->estaVazio()){
-        lista->remover();
+        lista->removerAtual();
+        tamanho--;
     }
     return valor;
 }

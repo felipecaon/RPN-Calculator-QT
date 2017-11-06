@@ -1,20 +1,15 @@
 #include "listduplamenteencadeada.h"
 
-ListDuplamenteEncadeada::ListDuplamenteEncadeada()
-{
-
-}
-
 ListDuplamenteEncadeada::~ListDuplamenteEncadeada()
 {
     if(!cabeca) return;
-    for(No* tmp = cabeca->prox; tmp; tmp = tmp->prox) delete tmp->prev;
+    for(No* tmp = cabeca->getProx(); tmp; tmp = tmp->getProx()) delete tmp->getPrev();
     delete rabo;
 }
 
 int ListDuplamenteEncadeada::valorAtual()
 {
-    if(m_current) return *atual->numero;
+    return atual->getNumero();
 }
 
 void ListDuplamenteEncadeada::adicionar(int valor)
@@ -26,48 +21,52 @@ void ListDuplamenteEncadeada::adicionar(int valor)
         atual = cabeca;
         return;
     }
+
     rabo = new No(nullptr, rabo, valor);
-    rabo->prev->prox = rabo;
+    rabo->getPrev()->setProx(rabo);
     atual = rabo;
 }
 
-void ListDuplamenteEncadeada::remover()
+void ListDuplamenteEncadeada::removerAtual()
 {
     if(!cabeca) return;
 
-    No* noAtual = atual;
-
     if(cabeca == rabo)
     {
-        cabeca = reabo = atual = nullptr;
+        delete cabeca;
+        cabeca = rabo = atual = nullptr;
         return;
     }
 
-    if(noAtual == cabeca)
+    if(atual == cabeca)
     {
-        cabeca = cabeca->prox;
-        delete cabeca->prev;
+        cabeca = cabeca->getProx();
+        delete cabeca->getPrev();
         atual = cabeca;
         return;
     }
 
-    if(cabeca == rabo)
+    if(atual == rabo)
     {
-        rabo = rabo->prev;
-        delete rabo->prox;
+        rabo = rabo->getPrev();
+        delete rabo->getProx();
         atual = rabo;
         return;
     }
-    atual = noAtual->prox;
-    noAtual->prev->prox = noAtual->proximo;
-    delete notAtual;
+
+
+    atual->getPrev()->setProx(atual->getProx());
+    atual->getProx()->setPrev(atual->getPrev());
+    No* temp = atual;
+    atual = atual->getPrev();
+    delete temp;
 }
 
 bool ListDuplamenteEncadeada::proximo()
 {
-    if(atual && atual->prox)
+    if(atual && atual->getProx())
     {
-       atual = atual->prox;
+       atual = atual->getProx();
        return true;
     }
     return false;
@@ -75,9 +74,9 @@ bool ListDuplamenteEncadeada::proximo()
 
 bool ListDuplamenteEncadeada::anterior()
 {
-    if(atual && atual->prox)
+    if(atual && atual->getPrev())
     {
-       atual = atual->prev;
+       atual = atual->getPrev();
        return true;
     }
     return false;

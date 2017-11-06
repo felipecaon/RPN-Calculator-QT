@@ -8,6 +8,7 @@
 class Pilha
 {
     ListDuplamenteEncadeada* lista = new ListDuplamenteEncadeada();
+    int tamanho = 0;
 
 public:
     Pilha();
@@ -15,6 +16,7 @@ public:
     void adicionar(int valor);
     int pegarValorAtual();
     ListDuplamenteEncadeada *getLista() const;
+    int getTamanho() const;
 };
 
 #endif // PILHA_H
