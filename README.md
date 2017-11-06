@@ -1,1 +1,1 @@
-RPN-Calculator-QT
+RPN
