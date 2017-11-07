@@ -20,6 +20,8 @@ private:
     Ui::RPN *ui;
     Pilha* pilha = new Pilha();
     QString pilhaDeValores;
+    void deletaUltimoOperando();
+    int getUltimoOperando();
 
 private slots:
     void botaoPressionado();
@@ -29,6 +31,8 @@ private slots:
     void onDivisao();
     void onMutiplicacao();
     void onSubtracao();
+    void adicionarNumeroAoVisor(int valor);
+
 };
 
 #endif // RPN_H

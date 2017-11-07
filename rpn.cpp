@@ -35,6 +35,22 @@ RPN::~RPN()
     delete ui;
 }
 
+void RPN::deletaUltimoOperando()
+{
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    cursor.select(QTextCursor::LineUnderCursor);
+    cursor.removeSelectedText();
+    cursor.movePosition(QTextCursor::Start);
+    ui->textEdit->setTextCursor(cursor);
+}
+
+int RPN::getUltimoOperando()
+{
+    deletaUltimoOperando();
+    return pilha->pegarValorAtual();
+}
+
 void RPN::botaoPressionado()
 {
     QPushButton * botao = (QPushButton*)sender();
@@ -51,9 +67,10 @@ void RPN::on_clear_released()
 void RPN::on_enter_released()
 {
 
-    ui->textEdit->setText(pilhaDeValores);
-    ui->lineEdit->setText("0");
+    adicionarNumeroAoVisor(pilhaDeValores.toInt());
     pilha->adicionar(pilhaDeValores.toInt());
+    pilhaDeValores = QString::fromStdString("0");
+    ui->lineEdit->setText(pilhaDeValores);
 
 }
 
@@ -62,11 +79,11 @@ void RPN::onSomar()
 
     if(pilha->getTamanho() > 1){
 
-        int operando_1 = pilha->pegarValorAtual();
-        int operando_2 = pilha->pegarValorAtual();
+        int operando_1 = getUltimoOperando();
+        int operando_2 = getUltimoOperando();
         int resultado = operando_1 + operando_2;
         pilha->adicionar(resultado);
-        ui->textEdit->setText(QString::number(resultado,'g',15));
+        adicionarNumeroAoVisor(resultado);
 
 
     }
@@ -77,11 +94,11 @@ void RPN::onDivisao()
 {
     if(pilha->getTamanho() > 1){
 
-        int operando_1 = pilha->pegarValorAtual();
-        int operando_2 = pilha->pegarValorAtual();
+        int operando_1 = getUltimoOperando();
+        int operando_2 = getUltimoOperando();
         int resultado = operando_1 / operando_2;
         pilha->adicionar(resultado);
-        ui->textEdit->setText(QString::number(resultado,'g',15));
+        adicionarNumeroAoVisor(resultado);
 
     }
 }
@@ -90,11 +107,11 @@ void RPN::onMutiplicacao()
 {
     if(pilha->getTamanho() > 1){
 
-        int operando_1 = pilha->pegarValorAtual();
-        int operando_2 = pilha->pegarValorAtual();
+        int operando_1 = getUltimoOperando();
+        int operando_2 = getUltimoOperando();
         int resultado = operando_1 * operando_2;
         pilha->adicionar(resultado);
-        ui->textEdit->setText(QString::number(resultado,'g',15));
+        adicionarNumeroAoVisor(resultado);
 
     }
 }
@@ -103,11 +120,18 @@ void RPN::onSubtracao()
 {
     if(pilha->getTamanho() > 1){
 
-        int operando_1 = pilha->pegarValorAtual();
-        int operando_2 = pilha->pegarValorAtual();
+        int operando_1 = getUltimoOperando();
+        int operando_2 = getUltimoOperando();
         int resultado = operando_1 - operando_2;
         pilha->adicionar(resultado);
-        ui->textEdit->setText(QString::number(resultado,'g',15));
+        adicionarNumeroAoVisor(resultado);
 
     }
+}
+
+void RPN::adicionarNumeroAoVisor(int valor)
+{
+
+    ui->textEdit->moveCursor(QTextCursor::Start);
+    ui->textEdit->insertPlainText(QString::number(valor,'g',15));
 }
