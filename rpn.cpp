@@ -27,6 +27,8 @@ RPN::RPN(QWidget *parent) :
     connect(ui->multiplicacao, SIGNAL(released()),this,SLOT(onMutiplicacao()));
     connect(ui->subtracao, SIGNAL(released()),this,SLOT(onSubtracao()));
 
+    connect(ui->clear, SIGNAL(released()),this,SLOT(OnLimpaLineEdit()));
+
 
 }
 
@@ -56,8 +58,8 @@ void RPN::botaoPressionado()
 {
     QPushButton * botao = (QPushButton*)sender();
     double numDoBtn = (ui->lineEdit->text() + botao->text()).toDouble();
-    pilhaDeValores = QString::number(numDoBtn,'g',15);
-    ui->lineEdit->setText(pilhaDeValores);
+    numeroLineEdit = QString::number(numDoBtn,'g',15);
+    ui->lineEdit->setText(numeroLineEdit);
 }
 
 void RPN::on_clear_released()
@@ -68,10 +70,10 @@ void RPN::on_clear_released()
 void RPN::on_enter_released()
 {
 
-    adicionarNumeroAoVisor(pilhaDeValores.toInt());
-    pilha->adicionar(pilhaDeValores.toInt());
-    pilhaDeValores = QString::fromStdString("0");
-    ui->lineEdit->setText(pilhaDeValores);
+    adicionarNumeroAoVisor(numeroLineEdit.toInt());
+    pilha->adicionar(numeroLineEdit.toInt());
+    numeroLineEdit = QString::fromStdString("0");
+    ui->lineEdit->setText(numeroLineEdit);
 
 }
 
@@ -88,6 +90,13 @@ void RPN::onSomar()
 
 
     }
+
+}
+
+void RPN::OnLimpaLineEdit()
+{
+   numeroLineEdit = QString::fromStdString("0");
+   ui->lineEdit->setText("0");
 
 }
 

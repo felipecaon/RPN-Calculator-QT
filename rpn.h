@@ -19,7 +19,7 @@ public:
 private:
     Ui::RPN *ui;
     Pilha* pilha = new Pilha();
-    QString pilhaDeValores;
+    QString numeroLineEdit;
     void deletaUltimoOperando();
     int getUltimoOperando();
 
@@ -28,6 +28,7 @@ private slots:
     void on_clear_released();
     void on_enter_released();
     void onSomar();
+    void OnLimpaLineEdit();
     void onDivisao();
     void onMutiplicacao();
     void onSubtracao();
