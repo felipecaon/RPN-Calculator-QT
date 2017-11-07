@@ -38,7 +38,7 @@ RPN::~RPN()
 void RPN::deletaUltimoOperando()
 {
     QTextCursor cursor = ui->textEdit->textCursor();
-    cursor.movePosition(QTextCursor::Start);
+    cursor.movePosition(QTextCursor::StartOfLine);
     cursor.select(QTextCursor::LineUnderCursor);
     cursor.removeSelectedText();
     cursor.movePosition(QTextCursor::Start);
@@ -133,5 +133,6 @@ void RPN::adicionarNumeroAoVisor(int valor)
 {
 
     ui->textEdit->moveCursor(QTextCursor::Start);
-    ui->textEdit->insertPlainText(QString::number(valor,'g',15));
+    ui->textEdit->moveCursor(QTextCursor::StartOfLine);
+    ui->textEdit->insertPlainText(QString::number(valor,'g',15) + "\r\n");
 }
