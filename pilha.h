@@ -15,6 +15,7 @@ public:
     ~Pilha();
     void adicionar(int valor);
     int pegarValorAtual();
+    void descartaUltimoValor();
     ListDuplamenteEncadeada *getLista() const;
     int getTamanho() const;
 };

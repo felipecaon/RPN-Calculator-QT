@@ -28,6 +28,8 @@ RPN::RPN(QWidget *parent) :
     connect(ui->subtracao, SIGNAL(released()),this,SLOT(onSubtracao()));
 
     connect(ui->clear, SIGNAL(released()),this,SLOT(OnLimpaLineEdit()));
+    connect(ui->row, SIGNAL(released()),this,SLOT(onInverteValores()));
+    connect(ui->del, SIGNAL(released()),this,SLOT(onDeletaUltimoPilha()));
 
 
 }
@@ -136,6 +138,29 @@ void RPN::onSubtracao()
         pilha->adicionar(resultado);
         adicionarNumeroAoVisor(resultado);
 
+    }
+}
+
+void RPN::onInverteValores()
+{
+    if(pilha->getTamanho() > 1){
+
+        int valor_1 = getUltimoOperando();
+        int valor_2 = getUltimoOperando();
+
+        pilha->adicionar(valor_1);
+        adicionarNumeroAoVisor(valor_1);
+        pilha->adicionar(valor_2);
+        adicionarNumeroAoVisor(valor_2);
+
+    }
+}
+
+void RPN::onDeletaUltimoPilha()
+{
+    if(pilha->getTamanho() > 0){
+        pilha->descartaUltimoValor();
+        deletaUltimoOperando();
     }
 }
 

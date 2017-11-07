@@ -37,3 +37,11 @@ int Pilha::pegarValorAtual()
     return valor;
 }
 
+void Pilha::descartaUltimoValor()
+{
+    if(!lista->estaVazio()){
+        lista->removerAtual();
+        tamanho--;
+    }
+}
+

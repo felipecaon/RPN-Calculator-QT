@@ -22,6 +22,7 @@ private:
     QString numeroLineEdit;
     void deletaUltimoOperando();
     int getUltimoOperando();
+    void adicionarNumeroAoVisor(int valor);
 
 private slots:
     void botaoPressionado();
@@ -32,7 +33,9 @@ private slots:
     void onDivisao();
     void onMutiplicacao();
     void onSubtracao();
-    void adicionarNumeroAoVisor(int valor);
+    void onInverteValores();
+    void onDeletaUltimoPilha();
+
 
 };
 
