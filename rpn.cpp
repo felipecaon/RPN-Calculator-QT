@@ -2,6 +2,7 @@
 #include "ui_rpn.h"
 #include "QDebug"
 #include <QKeyEvent>
+#include <QScrollBar>
 
 RPN::RPN(QWidget *parent) :
     QWidget(parent),
@@ -30,6 +31,8 @@ RPN::RPN(QWidget *parent) :
     connect(ui->clear, SIGNAL(released()),this,SLOT(OnLimpaLineEdit()));
     connect(ui->row, SIGNAL(released()),this,SLOT(onInverteValores()));
     connect(ui->del, SIGNAL(released()),this,SLOT(onDeletaUltimoPilha()));
+    connect(ui->down, SIGNAL(released()),this,SLOT(onDown()));
+    connect(ui->up, SIGNAL(released()),this,SLOT(onUp()));
 
 
 }
@@ -53,7 +56,7 @@ void RPN::deletaUltimoOperando()
 int RPN::getUltimoOperando()
 {
     deletaUltimoOperando();
-    return pilha->pegarValorAtual();
+    return pilha->desempilha();
 }
 
 void RPN::botaoPressionado()
@@ -73,7 +76,7 @@ void RPN::on_enter_released()
 {
 
     adicionarNumeroAoVisor(numeroLineEdit.toInt());
-    pilha->adicionar(numeroLineEdit.toInt());
+    pilha->pilha(numeroLineEdit.toInt());
     numeroLineEdit = QString::fromStdString("0");
     ui->lineEdit->setText(numeroLineEdit);
 
@@ -87,7 +90,7 @@ void RPN::onSomar()
         int operando_1 = getUltimoOperando();
         int operando_2 = getUltimoOperando();
         int resultado = operando_1 + operando_2;
-        pilha->adicionar(resultado);
+        pilha->pilha(resultado);
         adicionarNumeroAoVisor(resultado);
 
 
@@ -109,7 +112,7 @@ void RPN::onDivisao()
         int operando_1 = getUltimoOperando();
         int operando_2 = getUltimoOperando();
         int resultado = operando_1 / operando_2;
-        pilha->adicionar(resultado);
+        pilha->pilha(resultado);
         adicionarNumeroAoVisor(resultado);
 
     }
@@ -122,7 +125,7 @@ void RPN::onMutiplicacao()
         int operando_1 = getUltimoOperando();
         int operando_2 = getUltimoOperando();
         int resultado = operando_1 * operando_2;
-        pilha->adicionar(resultado);
+        pilha->pilha(resultado);
         adicionarNumeroAoVisor(resultado);
 
     }
@@ -135,7 +138,7 @@ void RPN::onSubtracao()
         int operando_1 = getUltimoOperando();
         int operando_2 = getUltimoOperando();
         int resultado = operando_1 - operando_2;
-        pilha->adicionar(resultado);
+        pilha->pilha(resultado);
         adicionarNumeroAoVisor(resultado);
 
     }
@@ -148,9 +151,9 @@ void RPN::onInverteValores()
         int valor_1 = getUltimoOperando();
         int valor_2 = getUltimoOperando();
 
-        pilha->adicionar(valor_1);
+        pilha->pilha(valor_1);
         adicionarNumeroAoVisor(valor_1);
-        pilha->adicionar(valor_2);
+        pilha->pilha(valor_2);
         adicionarNumeroAoVisor(valor_2);
 
     }
@@ -159,16 +162,27 @@ void RPN::onInverteValores()
 void RPN::onDeletaUltimoPilha()
 {
     if(pilha->getTamanho() > 0){
-        pilha->descartaUltimoValor();
+        pilha->desempilha();
         deletaUltimoOperando();
     }
+}
+
+void RPN::onDown()
+{
+    ui->textEdit->verticalScrollBar()->setValue(ui->textEdit->verticalScrollBar()->value() + 10);
+}
+
+void RPN::onUp()
+{
+    ui->textEdit->verticalScrollBar()->setValue(ui->textEdit->verticalScrollBar()->value() - 10);
 }
 
 void RPN::adicionarNumeroAoVisor(int valor)
 {
 
+    QString valorString = QString::number(valor,'g',15);
     ui->textEdit->moveCursor(QTextCursor::Start);
     ui->textEdit->moveCursor(QTextCursor::StartOfLine);
-    ui->textEdit->insertPlainText(QString::number(valor,'g',15) + "\r\n");
+    ui->textEdit->insertPlainText(valorString + "\r\n");
 }
 

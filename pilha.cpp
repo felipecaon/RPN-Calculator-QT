@@ -1,47 +1,66 @@
 #include "pilha.h"
-
-ListDuplamenteEncadeada *Pilha::getLista() const
+Pilha::~Pilha()
 {
-    return lista;
+    if(!cabeca) return;
+    for(No* tmp = cabeca->getProx(); tmp; tmp = tmp->getProx()) delete tmp->getPrev();
+    delete rabo;
+}
+
+void Pilha::pilha(int valor)
+{
+    if(!cabeca)
+    {
+        cabeca = new No(nullptr, nullptr, valor);
+        rabo = cabeca;
+    }else if(cabeca == rabo){
+        cabeca = new No(rabo, nullptr, valor);
+        rabo->setPrev(cabeca);
+    }else{
+        No* no = new No(cabeca, nullptr, valor);
+        cabeca->setPrev(no);
+        cabeca = no;
+    }
+
+    this->tamanho++;
+}
+
+int Pilha::desempilha()
+{
+
+    int valorRetorno;
+
+    if(!cabeca) return 0;
+
+    if(cabeca == rabo)
+    {
+        valorRetorno = cabeca->getNumero();
+        delete cabeca;
+        cabeca = rabo = nullptr;
+
+    }else{
+
+        valorRetorno = cabeca->getNumero();
+        cabeca = cabeca->getProx();
+        delete cabeca->getPrev();
+    }
+
+    this->tamanho--;
+    return valorRetorno;
 }
 
 int Pilha::getTamanho() const
 {
-    return tamanho;
+    return this->tamanho;
 }
 
-Pilha::Pilha()
+No *Pilha::getRabo() const
 {
-
+    return this->rabo;
 }
 
-Pilha::~Pilha()
+No *Pilha::getCabeca() const
 {
-    delete lista;
+    return this->cabeca;
 }
 
-void Pilha::adicionar(int valor)
-{
-    lista->adicionar(valor);
-    tamanho++;
-}
-
-int Pilha::pegarValorAtual()
-{
-    int valor = lista->valorAtual();
-
-    if(!lista->estaVazio()){
-        lista->removerAtual();
-        tamanho--;
-    }
-    return valor;
-}
-
-void Pilha::descartaUltimoValor()
-{
-    if(!lista->estaVazio()){
-        lista->removerAtual();
-        tamanho--;
-    }
-}
 

@@ -1,23 +1,28 @@
-#ifndef PILHA_H
-#define PILHA_H
+#ifndef LISTDUPLAMENTEENCADEADA_H
+#define LISTDUPLAMENTEENCADEADA_H
 
-#include "listduplamenteencadeada.h"
+#include "no.h"
 
 
 
 class Pilha
 {
-    ListDuplamenteEncadeada* lista = new ListDuplamenteEncadeada();
+    No* cabeca;
+    No* rabo;
     int tamanho = 0;
-
 public:
-    Pilha();
+    Pilha() { cabeca = rabo = nullptr; }
     ~Pilha();
-    void adicionar(int valor);
-    int pegarValorAtual();
-    void descartaUltimoValor();
-    ListDuplamenteEncadeada *getLista() const;
+    void pilha(int valor);
+    int desempilha();
+    bool estaVazio() {
+        return cabeca == nullptr;
+    }
+
+
     int getTamanho() const;
+    No *getRabo() const;
+    No *getCabeca() const;
 };
 
-#endif // PILHA_H
+#endif // LISTDUPLAMENTEENCADEADA_H

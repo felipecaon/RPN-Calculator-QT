@@ -35,6 +35,10 @@ private slots:
     void onSubtracao();
     void onInverteValores();
     void onDeletaUltimoPilha();
+    void onDown();
+    void onUp();
+
+
 
 
 };

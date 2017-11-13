@@ -26,13 +26,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         rpn.cpp \
-    listduplamenteencadeada.cpp \
     no.cpp \
     pilha.cpp
 
 HEADERS += \
         rpn.h \
-    listduplamenteencadeada.h \
     no.h \
     pilha.h
 
